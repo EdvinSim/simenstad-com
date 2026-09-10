@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Edvin Simenstad — Dirigent &amp; Klarinettist</title>
+<meta name="description" content="Official site of Edvin Simenstad">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --ink: #14181f;
+    --ink-soft: #1c212b;
+    --ivory: #f1eadc;
+    --brass: #b8935a;
+    --brass-dim: #8a713f;
+    --burgundy: #6b2737;
+    --slate: #8c93a1;
+    --rule: rgba(184,147,90,0.35);
+    --max-w: 1100px;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin:0;
+    background: var(--ink);
+    color: var(--ivory);
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, .display{
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    margin: 0;
+  }
+
+  a{ color: var(--brass); text-decoration: none; }
+  a:hover{ color: var(--ivory); }
+  a:focus-visible, button:focus-visible{
+    outline: 1px solid var(--brass);
+    outline-offset: 3px;
+  }
+
+  .wrap{
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* ---------- Header ---------- */
+
+  header{
+    padding: 28px 0 20px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  header .wrap{
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .brand{
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    letter-spacing: 0.04em;
+    color: var(--ivory);
+  }
+
+  nav{
+    display: flex;
+    gap: 28px;
+    font-size: 0.92rem;
+  }
+
+  nav a{ color: var(--slate); }
+  nav a:hover{ color: var(--brass); }
+
+  /* ---------- Hero ---------- */
+
+  .hero{
+    padding: 88px 0 96px;
+  }
+
+  .hero .wrap{
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 64px;
+    align-items: center;
+  }
+
+  .hero-text{
+    animation: rise 900ms ease-out both;
+  }
+
+  .eyebrow-line{
+    color: var(--brass);
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    margin-bottom: 18px;
+  }
+
+  h1.name{
+    font-size: clamp(2.8rem, 6vw, 4.6rem);
+    line-height: 1.02;
+    color: var(--ivory);
+  }
+
+  .tagline{
+    margin-top: 22px;
+    max-width: 42ch;
+    color: var(--slate);
+    font-size: 1.05rem;
+  }
+
+  .cta{
+    display: inline-block;
+    margin-top: 34px;
+    padding: 13px 28px;
+    border: 1px solid var(--brass);
+    color: var(--brass);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.92rem;
+    letter-spacing: 0.02em;
+    transition: background 200ms ease, color 200ms ease;
+  }
+
+  .cta:hover{
+    background: var(--brass);
+    color: var(--ink);
+  }
+
+  .portrait-frame{
+    position: relative;
+    animation: rise 1100ms ease-out both;
+  }
+
+  .portrait-frame::before{
+    content:"";
+    position:absolute;
+    top: 16px; left: 16px;
+    width: 100%; height: 100%;
+    border: 1px solid var(--brass);
+    z-index: 0;
+  }
+
+  .portrait{
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    display: block;
+    background: var(--ink-soft);
+    border: 1px solid rgba(241,234,220,0.08);
+  }
+
+  /* fallback shown if photo.jpg is missing */
+  .portrait-fallback{
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    background: var(--ink-soft);
+    border: 1px solid rgba(241,234,220,0.08);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--slate);
+    font-size: 0.85rem;
+    padding: 24px;
+  }
+
+  @keyframes rise{
+    from{ opacity: 0; transform: translateY(14px); }
+    to{ opacity: 1; transform: translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .hero-text, .portrait-frame{ animation: none; }
+  }
+
+  /* ---------- Staff line divider ---------- */
+
+  .staff{
+    padding: 6px 0;
+    opacity: 0.4;
+  }
+
+  .staff svg{ display:block; width:100%; height:34px; }
+
+  /* ---------- About ---------- */
+
+  .about{
+    padding: 90px 0 100px;
+  }
+
+  .about .wrap{
+    max-width: 680px;
+  }
+
+  .section-label{
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    color: var(--brass);
+    font-size: 1.15rem;
+    margin-bottom: 20px;
+  }
+
+  .about p{
+    font-size: 1.08rem;
+    color: #ddd4c2;
+    margin: 0 0 18px;
+  }
+
+  .about p:first-of-type{
+    font-size: 1.22rem;
+    color: var(--ivory);
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  /* ---------- Performances ---------- */
+
+  .performances{
+    padding: 0 0 100px;
+  }
+
+  .performances h2{
+    font-size: 2rem;
+    color: var(--ivory);
+    margin-bottom: 40px;
+  }
+
+  ul.dates{
+    list-style: none;
+    margin: 0; padding: 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  ul.dates li{
+    display: grid;
+    grid-template-columns: 140px 1fr auto;
+    gap: 20px;
+    align-items: baseline;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .date-col{
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--brass);
+    font-size: 1.1rem;
+  }
+
+  .venue-col .venue{
+    color: var(--ivory);
+    font-size: 1.05rem;
+  }
+
+  .venue-col .city{
+    color: var(--slate);
+    font-size: 0.9rem;
+    display: block;
+    margin-top: 2px;
+  }
+
+  .link-col a{
+    font-size: 0.88rem;
+    border-bottom: 1px solid transparent;
+  }
+  .link-col a:hover{ border-bottom-color: var(--brass); }
+
+  /* ---------- Contact ---------- */
+
+  .contact{
+    background: var(--ink-soft);
+    padding: 90px 0;
+    text-align: center;
+    border-top: 1px solid var(--rule);
+  }
+
+  .contact h2{
+    font-size: 2.4rem;
+    color: var(--ivory);
+  }
+
+  .contact p{
+    color: var(--slate);
+    max-width: 46ch;
+    margin: 18px auto 32px;
+  }
+
+  .contact-links{
+    display: flex;
+    gap: 26px;
+    justify-content: center;
+    flex-wrap: wrap;
+    font-size: 0.98rem;
+  }
+
+  /* ---------- Footer ---------- */
+
+  footer{
+    padding: 32px 0;
+    text-align: center;
+    color: var(--slate);
+    font-size: 0.82rem;
+  }
+
+  /* ---------- Responsive ---------- */
+
+  @media (max-width: 760px){
+    .hero{ padding: 56px 0 64px; }
+    .hero .wrap{
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    .portrait-frame{ max-width: 320px; }
+    nav{ gap: 18px; font-size: 0.85rem; }
+    ul.dates li{
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+    .link-col{ margin-top: 4px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="brand">Edvin Simenstad</div>
+    <nav>
+      <a href="#about">Bio</a>
+      <a href="#contact">Kontakt</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-text">
+      <div class="eyebrow-line">Dirigent &amp; Klarinettist</div>
+      <h1 class="name">Edvin<br>Simenstad</h1>
+      <a class="cta" href="#about">Les bio</a>
+    </div>
+
+    <div class="portrait-frame">
+      <!-- Replace "edvin_dirigent.jpg" with your image filename -->
+      <img
+        class="portrait"
+        src="edvin_dirigent.jpg"
+        alt="Portrait of Marguerite Vale"
+        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+      >
+      <div class="portrait-fallback">
+        Add your photo: save it next to this file as<br><strong>&nbsp;photo.jpg&nbsp;</strong><br>(or edit the src attribute above)
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="staff wrap" aria-hidden="true">
+  <svg viewBox="0 0 1000 34" preserveAspectRatio="none">
+    <line x1="0" y1="4" x2="1000" y2="4" stroke="#b8935a" stroke-width="1"/>
+    <line x1="0" y1="12" x2="1000" y2="12" stroke="#b8935a" stroke-width="1"/>
+    <line x1="0" y1="20" x2="1000" y2="20" stroke="#b8935a" stroke-width="1"/>
+    <line x1="0" y1="28" x2="1000" y2="28" stroke="#b8935a" stroke-width="1"/>
+  </svg>
+</div>
+
+<section class="about" id="about">
+  <div class="wrap">
+    <div class="section-label">Bio</div>
+
+    <p>
+      Edvin Andre Simenstad er både dirigent og klarinettist,
+      utdannet ved Norges Musikkhøgskole med Bachelor- og Mastergrad i dirigering.
+      Han har opparbeidet seg solid faglig kompetanse og har gjort seg bemerket i det musikalske miljøet.
+      Som dirigent har Edvin utført oppdrag med flere anerkjente ensembler slik som Kongelige Norske Marinens musikkorps,
+      Hærens musikkorps og Göteborg Wind Orchestra.
+      I 2014/15 fikk han æren av å være assistentdirigent for Andreas Hanson og Forsvarets Stabsmusikkorps,
+      hvor han bidro til å lede noen av landets fremste musikere.
+    </p>
+    <p>
+      I tillegg til å være en dyktig dirigent har Edvin også vært en ledende rolle som klarinettist i flere ensembler. Hans engasjement som konsertmester i Norsk Blåseorkester, Vestre Aker musikkorps og Lillestrøm musikkorps, har gitt ham muligheten til å vise frem sin musikalitet og dedikasjon på ulike arenaer. I tillegg er han kunstnerisk leder for Lillestrøm Harmoniensemble.
+    </p>
+    <p>
+      Med en brennende lidenskap for musikk for blåsere, har Edvin satt sitt preg på repertoaret for disse instrumentene. Hans kreative arrangementer og transkripsjoner av klassisk musikk har vekket oppsikt og blitt høyt verdsatt av både musikere og lyttere. Gjennom sitt arbeid har han gitt nytt liv til velkjente komposisjoner og samtidig utforsket nye lydmuligheter innenfor blåsemusikken. Edvins kombinasjon av talent, lidenskap og kunnskap, har gjort at han har befestet seg som en fremragende musiker. Han fortsetter å utforske nye musikalske horisonter og spre sin kjærlighet for blåsemusikken til et stadig større publikum.
+    </p>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <h2>Booking &amp; kontakt</h2>
+    <div class="contact-links">
+      <a href="mailto:edvin@simenstad.com">edvin@simenstad.com</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  &copy; 2026 Edvin Simenstad. All rights reserved.
+</footer>
+
+</body>
+</html>
