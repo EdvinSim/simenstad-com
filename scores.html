@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Noter | Edvin Simenstad</title>
+  <meta name="description" content="Kjøp noter og utskrifter av Edvin Simenstad">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --ink: #14181f;
+      --ink-soft: #1c212b;
+      --ivory: #f1eadc;
+      --brass: #b8935a;
+      --brass-dim: #8a713f;
+      --slate: #8c93a1;
+      --rule: rgba(184,147,90,0.35);
+      --max-w: 1100px;
+      --panel: rgba(255,255,255,0.02);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--ink);
+      color: var(--ivory);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, .display {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      margin: 0;
+    }
+
+    a { color: var(--brass); text-decoration: none; }
+    a:hover { color: var(--ivory); }
+    button, input, select {
+      font: inherit;
+    }
+
+    .wrap {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    header {
+      padding: 28px 0 20px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    header .wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      letter-spacing: 0.04em;
+      color: var(--ivory);
+    }
+
+    nav {
+      display: flex;
+      gap: 28px;
+      font-size: 0.92rem;
+      flex-wrap: wrap;
+    }
+
+    nav a { color: var(--slate); }
+    nav a:hover { color: var(--brass); }
+
+    .page {
+      padding: 80px 0 110px;
+    }
+
+    .intro {
+      margin-bottom: 34px;
+    }
+
+    .section-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      color: var(--brass);
+      font-size: 1.2rem;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: clamp(2.8rem, 6vw, 4.2rem);
+      line-height: 1.02;
+      margin-bottom: 12px;
+    }
+
+    .intro p {
+      color: var(--slate);
+      margin: 0;
+      max-width: 64ch;
+    }
+
+    .toolbar {
+      display: grid;
+      grid-template-columns: minmax(220px, 1.5fr) minmax(160px, 0.6fr);
+      gap: 14px;
+      margin: 30px 0 26px;
+    }
+
+    .search-wrap, .sort-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .toolbar label {
+      color: var(--slate);
+      font-size: 0.8rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .search-wrap input,
+    .sort-wrap select {
+      width: 100%;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--rule);
+      color: var(--ivory);
+      padding: 12px 14px;
+      border-radius: 0;
+    }
+
+    .search-wrap input:focus,
+    .sort-wrap select:focus {
+      outline: 1px solid var(--brass);
+      outline-offset: 2px;
+    }
+
+    .inventory {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+      margin-top: 18px;
+    }
+
+    .score-card {
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+      background: var(--panel);
+      border: 1px solid var(--rule);
+      padding: 22px 20px;
+      transition: transform 150ms ease, border-color 150ms ease;
+    }
+
+    .score-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--brass);
+    }
+
+    .score-card .meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+      color: var(--slate);
+      font-size: 0.82rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .score-card h3 {
+      font-size: clamp(2rem, 2vw, 2.5rem);
+      line-height: 1.06;
+      margin-bottom: 10px;
+    }
+
+    .composer {
+      color: var(--slate);
+      font-size: 0.98rem;
+      margin-bottom: 16px;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .pill {
+      border: 1px solid var(--rule);
+      color: var(--ivory);
+      font-size: 0.76rem;
+      padding: 6px 9px;
+      display: inline-block;
+    }
+
+    .description {
+      color: #ddd4c2;
+      margin: 0 0 18px;
+      flex: 1;
+    }
+
+    .price-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-top: 14px;
+      border-top: 1px solid var(--rule);
+    }
+
+    .price {
+      font-size: 0.8rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--slate);
+    }
+
+    .buy-btn {
+      display: inline-block;
+      padding: 11px 16px;
+      border: 1px solid var(--brass);
+      color: var(--brass);
+      background: transparent;
+      cursor: pointer;
+      transition: background 200ms ease, color 200ms ease;
+    }
+
+    .buy-btn:hover {
+      background: var(--brass);
+      color: var(--ink);
+    }
+
+    .empty-state {
+      display: none;
+      border: 1px solid var(--rule);
+      background: rgba(255,255,255,0.01);
+      padding: 26px 20px;
+      color: var(--slate);
+    }
+
+    footer {
+      padding: 32px 0;
+      text-align: center;
+      color: var(--slate);
+      font-size: 0.82rem;
+      border-top: 1px solid var(--rule);
+    }
+
+    @media (max-width: 900px){
+      .inventory { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 640px){
+      .toolbar {
+        grid-template-columns: 1fr;
+      }
+      .inventory { grid-template-columns: 1fr; }
+      nav { gap: 18px; font-size: 0.85rem; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <div class="brand">Edvin Simenstad</div>
+      <nav>
+        <a href="index.html">Hjem</a>
+        <a href="scores.html">Noter</a>
+        <a href="index.html#contact">Kontakt</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="wrap">
+      <section class="intro">
+        <div class="section-label">Sheet music</div>
+        <h1>Noter til kjøp</h1>
+        <p>Gå gjennom katalogen, filtrer etter instrument eller søk etter titel. Listen hentes fra en Google Sheet, så du trenger ikke egen database.</p>
+      </section>
+
+      <div class="toolbar">
+        <div class="search-wrap">
+          <label for="searchInput">Søk</label>
+          <input id="searchInput" type="search" placeholder="Søk etter titel, komponist, instrument..." aria-label="Søk etter noter">
+        </div>
+
+        <div class="sort-wrap">
+          <label for="sortSelect">Sorter</label>
+          <select id="sortSelect" aria-label="Sorter noter">
+            <option value="title-asc">Tittel A–Å</option>
+            <option value="composer-asc">Komponist A–Å</option>
+            <option value="time-asc">Tid kort → lang</option>
+            <option value="time-desc">Tid lang → kort</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="inventory" class="inventory" aria-live="polite"></div>
+      <div id="emptyState" class="empty-state">Ingen resultater matcher søket. Prøv en annen kombinasjon.</div>
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2026 Edvin Simenstad. All rights reserved.
+  </footer>
+
+  <script>
+    const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTuu01Tz5oDXJ_xB0g88pjttSkygdbLi1Ihuh3bGAREfi-v2b6IZFC0GG7mfUym5sejLV7Db-kxrRhh/pub?output=csv';
+
+   const fallbackProducts = [];
+
+   const inventoryEl = document.getElementById('inventory');
+   const emptyStateEl = document.getElementById('emptyState');
+   const searchInput = document.getElementById('searchInput');
+   const sortSelect = document.getElementById('sortSelect');
+
+   function normalizeHeader(value) {
+     return String(value || '')
+       .trim()
+       .toLowerCase()
+       .replace(/å/g, 'a')
+       .replace(/æ/g, 'ae')
+       .replace(/ø/g, 'o')
+       .replace(/[^a-z0-9]/g, '');
+   }
+
+   function parseCSV(text) {
+     const rows = [];
+     let current = '';
+     let row = [];
+     let inQuotes = false;
+
+     for (let i = 0; i < text.length; i++) {
+       const char = text[i];
+       const next = text[i + 1];
+
+       if (char === '"') {
+         if (inQuotes && next === '"') {
+           current += '"';
+           i++;
+         } else {
+           inQuotes = !inQuotes;
+         }
+       } else if (char === ',' && !inQuotes) {
+         row.push(current);
+         current = '';
+       } else if ((char === '\n' || char === '\r') && !inQuotes) {
+         if (char === '\r' && next === '\n') i++;
+         row.push(current);
+         if (row.some(cell => cell !== '')) {
+           rows.push(row);
+         }
+         row = [];
+         current = '';
+       } else {
+         current += char;
+       }
+     }
+
+     if (current.length || row.length) {
+       row.push(current);
+       if (row.some(cell => cell !== '')) rows.push(row);
+     }
+
+     return rows;
+   }
+
+   function getCellValue(obj, keys) {
+     for (const key of keys) {
+       if (obj[key] !== undefined && obj[key] !== null && String(obj[key]).trim() !== '') {
+         return String(obj[key]).trim();
+       }
+     }
+     return '';
+   }
+
+   function parseDurationToSeconds(value) {
+     if (!value) return 0;
+     const cleaned = String(value).trim();
+     if (!cleaned) return 0;
+
+     const match = cleaned.match(/(\d+):(\d{1,2})/);
+     if (match) {
+       return Number(match[1]) * 60 + Number(match[2]);
+     }
+
+     const numeric = Number(cleaned.replace(/[^0-9,\.]/g, '').replace(',', '.'));
+     return Number.isFinite(numeric) ? numeric : 0;
+   }
+
+   function mapSheetRows(rows) {
+     if (!rows || rows.length < 2) return fallbackProducts;
+
+     const headers = rows[0].map(header => normalizeHeader(header));
+     const productRows = rows.slice(1);
+
+     return productRows
+       .map(row => {
+         const obj = {};
+         headers.forEach((key, index) => {
+           obj[key] = row[index] || '';
+         });
+
+         const title = getCellValue(obj, ['tittel', 'title']) || 'Uten tittel';
+         const composer = getCellValue(obj, ['komponist', 'composer']) || 'Ukjent komponist';
+         const ensemble = getCellValue(obj, ['besetning', 'ensemble', 'instrument', 'instrumenter']) || 'Ukjent besetning';
+         const genre = getCellValue(obj, ['sjanger', 'genre']) || 'Original';
+         const time = getCellValue(obj, ['tid', 'time', 'duration']) || '—';
+         const audioUrl = getCellValue(obj, ['lyd', 'audio', 'audioUrl', 'soundcloud', 'youtube']) || '';
+         const buyUrl = getCellValue(obj, ['kjop', 'kjøp', 'buy', 'buyurl', 'purchase']) || 'mailto:edvin@simenstad.com?subject=Kjøp%20noter';
+
+         return {
+           title,
+           composer,
+           ensemble,
+           genre,
+           time,
+           audioUrl,
+           buyUrl,
+           durationSeconds: parseDurationToSeconds(time)
+         };
+       })
+       .filter(product => product.title && product.title !== '');
+   }
+
+   function formatTimeLabel(value) {
+     if (!value || String(value).trim() === '—') return '—';
+     const text = String(value).trim();
+     const numeric = Number(text.replace(',', '.'));
+     if (!Number.isNaN(numeric) && !text.includes(':')) {
+       return `${numeric} min`;
+     }
+     return text;
+   }
+
+   function getFilteredProducts() {
+     const query = searchInput.value.trim().toLowerCase();
+     let products = [...window.scoreProducts];
+
+     if (query) {
+       products = products.filter(product => {
+         const haystack = [
+           product.title,
+           product.composer,
+           product.ensemble,
+           product.genre,
+           product.time
+         ].join(' ').toLowerCase();
+         return haystack.includes(query);
+       });
+     }
+
+     const mode = sortSelect.value;
+     products.sort((a, b) => {
+       if (mode === 'composer-asc') return (a.composer || '').localeCompare(b.composer || '', 'nb');
+       if (mode === 'time-asc') return (a.durationSeconds || 0) - (b.durationSeconds || 0);
+       if (mode === 'time-desc') return (b.durationSeconds || 0) - (a.durationSeconds || 0);
+       return (a.title || '').localeCompare(b.title || '', 'nb');
+     });
+
+     return products;
+   }
+
+   function renderProducts() {
+     const products = getFilteredProducts();
+
+     if (!products.length) {
+       inventoryEl.innerHTML = '';
+       emptyStateEl.style.display = 'block';
+       return;
+     }
+
+     emptyStateEl.style.display = 'none';
+     inventoryEl.innerHTML = products.map(product => `
+       <article class="score-card">
+         <div class="meta">
+           <span>${escapeHtml(product.genre || 'Original')}</span>
+           <span>${escapeHtml(formatTimeLabel(product.time))}</span>
+         </div>
+         <h3>${escapeHtml(product.title || 'Uten tittel')}</h3>
+         <div class="composer">${escapeHtml(product.composer || 'Ukjent komponist')}</div>
+
+         <div class="pill-row">
+           <span class="pill">${escapeHtml(product.ensemble || 'Ukjent besetning')}</span>
+           ${product.audioUrl ? '<span class="pill">Lyd</span>' : ''}
+         </div>
+
+         <div class="price-row">
+           <div class="price"> </div>
+           <div style="display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end;">
+             ${product.audioUrl ? `<a class="buy-btn" href="${escapeAttribute(product.audioUrl)}" target="_blank" rel="noopener noreferrer">Lytt</a>` : ''}
+             <a class="buy-btn" href="${escapeAttribute(product.buyUrl || 'mailto:edvin@simenstad.com?subject=Kjøp%20noter')}" target="_blank" rel="noopener noreferrer">Kjøp</a>
+           </div>
+         </div>
+       </article>
+     `).join('');
+   }
+
+   function escapeHtml(value) {
+     return String(value)
+       .replace(/&/g, '&amp;')
+       .replace(/</g, '&lt;')
+       .replace(/>/g, '&gt;')
+       .replace(/"/g, '&quot;')
+       .replace(/'/g, '&#039;');
+   }
+
+   function escapeAttribute(value) {
+     return escapeHtml(value);
+   }
+
+   async function loadProducts() {
+     try {
+       const response = await fetch(SHEET_URL, { cache: 'no-store' });
+       if (!response.ok) throw new Error('Google Sheet not available');
+
+       const csvText = await response.text();
+       const rows = parseCSV(csvText);
+       const products = mapSheetRows(rows);
+       window.scoreProducts = products.length ? products : fallbackProducts;
+     } catch (error) {
+       window.scoreProducts = [];
+     }
+
+     renderProducts();
+   }
+
+   searchInput.addEventListener('input', renderProducts);
+   sortSelect.addEventListener('change', renderProducts);
+
+   window.scoreProducts = [];
+   loadProducts();
+  </script>
+</body>
+</html>
