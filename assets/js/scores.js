@@ -10,14 +10,30 @@ const sortSelect = document.getElementById('sortSelect');
 const pageSize = 12;
 let currentPage = 1;
 
-function normalizeHeader(value) {
+function normalizeText(value) {
   return String(value || '')
     .trim()
     .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
     .replace(/å/g, 'a')
     .replace(/æ/g, 'ae')
     .replace(/ø/g, 'o')
+    .replace(/œ/g, 'oe')
+    .replace(/é/g, 'e')
+    .replace(/è/g, 'e')
+    .replace(/ê/g, 'e')
+    .replace(/ë/g, 'e')
+    .replace(/á/g, 'a')
+    .replace(/à/g, 'a')
+    .replace(/ä/g, 'a')
+    .replace(/ö/g, 'o')
+    .replace(/ü/g, 'u')
     .replace(/[^a-z0-9]/g, '');
+}
+
+function normalizeHeader(value) {
+  return normalizeText(value);
 }
 
 function parseCSV(text) {
@@ -123,12 +139,15 @@ function mapSheetRows(rows) {
       const audioUrl = getCellValue(obj, ['lyd', 'audio', 'audioUrl', 'soundcloud', 'youtube']) || '';
       const buyUrl = getCellValue(obj, ['kjop', 'kjøp', 'buy', 'buyurl', 'purchase']) || '';
 
+      const searchText = [title, composer, ensemble, genre, time].join(' ');
+
       return {
         title,
         composer,
         ensemble,
         genre,
         time,
+        searchText: normalizeText(searchText),
         previewUrl: resolveDriveUrl(previewUrl),
         audioUrl: resolveDriveUrl(audioUrl),
         buyUrl: resolveDriveUrl(buyUrl),
@@ -175,15 +194,16 @@ function getFilteredProducts() {
   let products = [...window.scoreProducts];
 
   if (query) {
+    const normalizedQuery = normalizeText(query);
     products = products.filter(product => {
-      const haystack = [
+      const haystack = product.searchText || normalizeText([
         product.title,
         product.composer,
         product.ensemble,
         product.genre,
         product.time
-      ].join(' ').toLowerCase();
-      return haystack.includes(query);
+      ].join(' '));
+      return haystack.includes(normalizedQuery);
     });
   }
 
