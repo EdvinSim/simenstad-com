@@ -14,6 +14,7 @@ This repository contains a static website for Edvin Simenstad.
 - Do not add frameworks, build tools, or package dependencies unless explicitly required.
 - Preserve accessibility: semantic HTML, clear link text, alt text for images.
 - It should look good on both desktop and mobile devices.
+- Header and footer should remain consistent across pages.
 
 ## Scope boundaries
 - Do not modify unrelated files or generated output.
