@@ -1,0 +1,258 @@
+.page {
+  padding: 80px 0 110px;
+}
+
+.intro {
+  margin-bottom: 34px;
+}
+
+.intro .section-label {
+  margin-bottom: 18px;
+  font-size: 1.2rem;
+}
+
+.intro h1 {
+  font-size: clamp(2.8rem, 6vw, 4.2rem);
+  line-height: 1.02;
+  margin-bottom: 12px;
+}
+
+.intro p {
+  color: var(--slate);
+  margin: 0;
+  max-width: 64ch;
+}
+
+.toolbar {
+  display: grid;
+  grid-template-columns: minmax(220px, 1.5fr) minmax(160px, 0.6fr);
+  gap: 14px;
+  margin: 30px 0 26px;
+}
+
+.search-wrap,
+.sort-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.toolbar label {
+  color: var(--slate);
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.search-wrap input,
+.sort-wrap select {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--rule);
+  color: var(--ivory);
+  padding: 12px 14px;
+  border-radius: 0;
+}
+
+.sort-wrap select {
+  background: var(--ivory);
+  color: var(--ink);
+}
+
+.inventory {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
+  gap: 22px;
+  margin-top: 18px;
+}
+
+.score-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  background: var(--panel);
+  border: 1px solid var(--rule);
+  padding: 22px 20px;
+  transition: transform 150ms ease, border-color 150ms ease;
+}
+
+.score-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--brass);
+}
+
+.score-card h3 {
+  min-height: 6.8rem;
+  max-height: 6.8rem;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  align-items: flex-start;
+}
+
+.score-card .meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+  color: var(--slate);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.score-card h3 {
+  font-size: clamp(2rem, 2vw, 2.5rem);
+  line-height: 1.06;
+  margin-bottom: 10px;
+}
+
+.composer {
+  color: var(--slate);
+  font-size: 0.98rem;
+  min-height: 2.2rem;
+  margin-bottom: 16px;
+}
+
+.pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+  min-height: 2.5rem;
+}
+
+.pill {
+  border: 1px solid var(--rule);
+  color: var(--ivory);
+  font-size: 0.76rem;
+  padding: 6px 9px;
+  display: inline-block;
+}
+
+.description {
+  color: #ddd4c2;
+  margin: 0 0 18px;
+  flex: 1;
+}
+
+.price-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 12px;
+  padding-top: 14px;
+  margin-top: auto;
+  border-top: 1px solid var(--rule);
+  min-height: 64px;
+  width: 100%;
+}
+
+.price {
+  display: none;
+}
+
+.purchase-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  margin-top: 4px;
+}
+
+.buy-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 88px;
+  padding: 11px 14px;
+  border: 1px solid var(--brass);
+  border-radius: 999px;
+  color: var(--brass);
+  background: rgba(192, 156, 92, 0.04);
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: background 200ms ease, color 200ms ease, transform 150ms ease, border-color 150ms ease;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.buy-btn:hover {
+  background: var(--brass);
+  color: var(--ink);
+  transform: translateY(-1px);
+  border-color: var(--brass);
+}
+
+.buy-btn span:first-child {
+  font-size: 0.9em;
+  line-height: 1;
+}
+
+.buy-btn.is-empty {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.empty-state {
+  display: none;
+  border: 1px solid var(--rule);
+  background: rgba(255, 255, 255, 0.01);
+  padding: 26px 20px;
+  color: var(--slate);
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 28px;
+}
+
+.page-btn {
+  min-width: 42px;
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid var(--rule);
+  background: transparent;
+  color: var(--ivory);
+  cursor: pointer;
+  transition: border-color 150ms ease, background 150ms ease, color 150ms ease;
+}
+
+.page-btn:hover,
+.page-btn.is-active {
+  border-color: var(--brass);
+  background: var(--brass);
+  color: var(--ink);
+}
+
+.page-btn.is-disabled {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+@media (max-width: 900px) {
+  .inventory {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .toolbar {
+    grid-template-columns: 1fr;
+  }
+
+  .inventory {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Noter | Edvin Simenstad</title>
+  <meta name="description" content="Kjøp noter og utskrifter av Edvin Simenstad">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/css/site.css">
+  <link rel="stylesheet" href="assets/css/scores.css">
+</head>
+<body>
+  <header data-component="header"></header>
+
+  <main class="page">
+   <div class="wrap">
+     <section class="intro">
+       <h1>Noter til salgs</h1>
+     </section>
+
+     <div class="toolbar">
+       <div class="search-wrap">
+         <label for="searchInput">Søk</label>
+         <input id="searchInput" type="search" placeholder="Søk etter titel, komponist, besetning..." aria-label="Søk etter noter">
+       </div>
+
+       <div class="sort-wrap">
+         <label for="sortSelect">Sorter</label>
+         <select id="sortSelect" aria-label="Sorter noter">
+           <option value="title-asc">Tittel</option>
+           <option value="composer-asc">Komponist</option>
+           <option value="ensemble-asc">Besetning</option>
+           <option value="genre-asc">Sjanger</option>
+           <option value="time-asc">Tid kort → lang</option>
+           <option value="time-desc">Tid lang → kort</option>
+         </select>
+       </div>
+     </div>
+
+     <div id="inventory" class="inventory" aria-live="polite"></div>
+     <div id="pagination" class="pagination" aria-live="polite"></div>
+     <div id="emptyState" class="empty-state">Ingen resultater matcher søket. Prøv en annen kombinasjon.</div>
+   </div>
+  </main>
+
+  <footer data-component="footer"></footer>
+
+  <script src="assets/js/site.js" defer></script>
+  <script src="assets/js/scores.js" defer></script>
+</body>
+</html>
