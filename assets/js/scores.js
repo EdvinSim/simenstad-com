@@ -99,6 +99,7 @@ function mapSheetRows(rows) {
       const ensemble = getCellValue(obj, ['besetning', 'ensemble', 'instrument', 'instrumenter']) || 'Ukjent besetning';
       const genre = getCellValue(obj, ['sjanger', 'genre']) || 'Original';
       const time = getCellValue(obj, ['tid', 'time', 'duration']) || '—';
+      const previewUrl = getCellValue(obj, ['noteeksempel', 'vis', 'preview', 'previewurl', 'sample', 'demo', 'demourl']) || '';
       const audioUrl = getCellValue(obj, ['lyd', 'audio', 'audioUrl', 'soundcloud', 'youtube']) || '';
       const buyUrl = getCellValue(obj, ['kjop', 'kjøp', 'buy', 'buyurl', 'purchase']) || '';
 
@@ -108,12 +109,35 @@ function mapSheetRows(rows) {
         ensemble,
         genre,
         time,
-        audioUrl,
-        buyUrl,
+        previewUrl: resolveDriveUrl(previewUrl),
+        audioUrl: resolveDriveUrl(audioUrl),
+        buyUrl: resolveDriveUrl(buyUrl),
         durationSeconds: parseDurationToSeconds(time)
       };
     })
     .filter(product => product.title && product.title !== '');
+}
+
+function resolveDriveUrl(value) {
+  if (!value) return '';
+  const trimmed = String(value).trim();
+  if (!trimmed) return '';
+
+  if (/^https?:\/\//i.test(trimmed)) {
+    if (/drive\.google\.com\/file\/d\//i.test(trimmed) || /drive\.google\.com\/uc\?/i.test(trimmed)) {
+      const idMatch = trimmed.match(/(?:\/d\/|id=)([A-Za-z0-9_-]{10,})/);
+      if (idMatch) {
+        return `https://drive.google.com/uc?export=download&id=${idMatch[1]}`;
+      }
+    }
+    return trimmed;
+  }
+
+  if (/^[A-Za-z0-9_-]{10,}$/.test(trimmed)) {
+    return `https://drive.google.com/uc?export=view&id=${trimmed}`;
+  }
+
+  return trimmed;
 }
 
 function formatTimeLabel(value) {
@@ -182,6 +206,10 @@ function renderProducts() {
       <div class="price-row">
         <div class="price"> </div>
         <div class="purchase-actions">
+          <a class="buy-btn ${product.previewUrl ? '' : 'is-empty'}" href="${product.previewUrl ? escapeAttribute(product.previewUrl) : '#'}" target="${product.previewUrl ? '_blank' : ''}" rel="${product.previewUrl ? 'noopener noreferrer' : ''}" aria-disabled="${product.previewUrl ? 'false' : 'true'}" ${product.previewUrl ? '' : 'tabindex="-1"'}>
+            <span aria-hidden="true">📄</span>
+            <span>Vis</span>
+          </a>
           <a class="buy-btn ${product.audioUrl ? '' : 'is-empty'}" href="${product.audioUrl ? escapeAttribute(product.audioUrl) : '#'}" target="${product.audioUrl ? '_blank' : ''}" rel="${product.audioUrl ? 'noopener noreferrer' : ''}" aria-disabled="${product.audioUrl ? 'false' : 'true'}" ${product.audioUrl ? '' : 'tabindex="-1"'}>
             <span aria-hidden="true">▶</span>
             <span>Lytt</span>
