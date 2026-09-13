@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', async () => {
+  const currentPath = window.location.pathname;
   const pageMap = {
     'index.html': 'home',
     '/index.html': 'home',
@@ -6,7 +7,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     '/scores.html': 'scores'
   };
 
-  const currentPage = pageMap[window.location.pathname.split('/').pop()] || 'home';
+  const currentPage = pageMap[currentPath.split('/').pop()] || 'home';
 
   const loadComponent = async (selector, url) => {
     const target = document.querySelector(selector);

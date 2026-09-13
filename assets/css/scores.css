@@ -188,6 +188,38 @@
   color: var(--slate);
 }
 
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 28px;
+}
+
+.page-btn {
+  min-width: 42px;
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid var(--rule);
+  background: transparent;
+  color: var(--ivory);
+  cursor: pointer;
+  transition: border-color 150ms ease, background 150ms ease, color 150ms ease;
+}
+
+.page-btn:hover,
+.page-btn.is-active {
+  border-color: var(--brass);
+  background: var(--brass);
+  color: var(--ink);
+}
+
+.page-btn.is-disabled {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
 @media (max-width: 900px) {
   .inventory {
     grid-template-columns: repeat(2, minmax(0, 1fr));

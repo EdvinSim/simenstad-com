@@ -4,8 +4,11 @@ const fallbackProducts = [];
 
 const inventoryEl = document.getElementById('inventory');
 const emptyStateEl = document.getElementById('emptyState');
+const paginationEl = document.getElementById('pagination');
 const searchInput = document.getElementById('searchInput');
 const sortSelect = document.getElementById('sortSelect');
+const pageSize = 12;
+let currentPage = 1;
 
 function normalizeHeader(value) {
   return String(value || '')
@@ -81,10 +84,23 @@ function parseDurationToSeconds(value) {
   return Number.isFinite(numeric) ? numeric : 0;
 }
 
+function parsePublishedValue(value) {
+  const normalized = String(value ?? '')
+    .trim()
+    .toLowerCase();
+
+  if (!normalized) return true;
+  if (['true', '1', 'yes', 'y', 'ja', 'checked', 'check', '✓', '✔', '☑', 'on'].includes(normalized)) return true;
+  if (['false', '0', 'no', 'n', 'nei', 'unchecked', 'off', '✗', '×'].includes(normalized)) return false;
+
+  return true;
+}
+
 function mapSheetRows(rows) {
   if (!rows || rows.length < 2) return fallbackProducts;
 
   const headers = rows[0].map(header => normalizeHeader(header));
+  const publishIndex = headers.findIndex(key => key === 'publiser' || key === 'publish');
   const productRows = rows.slice(1);
 
   return productRows
@@ -93,6 +109,10 @@ function mapSheetRows(rows) {
       headers.forEach((key, index) => {
         obj[key] = row[index] || '';
       });
+
+      if (publishIndex >= 0 && !parsePublishedValue(row[publishIndex])) {
+        return null;
+      }
 
       const title = getCellValue(obj, ['tittel', 'title']) || 'Uten tittel';
       const composer = getCellValue(obj, ['komponist', 'composer']) || 'Ukjent komponist';
@@ -115,7 +135,7 @@ function mapSheetRows(rows) {
         durationSeconds: parseDurationToSeconds(time)
       };
     })
-    .filter(product => product.title && product.title !== '');
+    .filter(product => product && product.title && product.title !== '');
 }
 
 function resolveDriveUrl(value) {
@@ -180,17 +200,75 @@ function getFilteredProducts() {
   return products;
 }
 
+function renderPagination(totalPages) {
+  if (totalPages <= 1) {
+    paginationEl.innerHTML = '';
+    return;
+  }
+
+  const buttons = [];
+
+  buttons.push(`
+    <button type="button" class="page-btn ${currentPage === 1 ? 'is-disabled' : ''}" data-page="prev" ${currentPage === 1 ? 'disabled' : ''}>
+      Forrige
+    </button>
+  `);
+
+  for (let page = 1; page <= totalPages; page++) {
+    buttons.push(`
+      <button type="button" class="page-btn ${page === currentPage ? 'is-active' : ''}" data-page="${page}">
+        ${page}
+      </button>
+    `);
+  }
+
+  buttons.push(`
+    <button type="button" class="page-btn ${currentPage === totalPages ? 'is-disabled' : ''}" data-page="next" ${currentPage === totalPages ? 'disabled' : ''}>
+      Neste
+    </button>
+  `);
+
+  paginationEl.innerHTML = buttons.join('');
+
+  paginationEl.querySelectorAll('.page-btn').forEach(button => {
+    button.addEventListener('click', () => {
+      const targetPage = button.dataset.page;
+      if (!targetPage) return;
+
+      if (targetPage === 'prev') {
+        currentPage = Math.max(1, currentPage - 1);
+      } else if (targetPage === 'next') {
+        currentPage = Math.min(totalPages, currentPage + 1);
+      } else {
+        currentPage = Number(targetPage);
+      }
+
+      renderProducts();
+    });
+  });
+}
+
 function renderProducts() {
   const products = getFilteredProducts();
+  const totalPages = Math.max(1, Math.ceil(products.length / pageSize));
+
+  if (currentPage > totalPages) {
+    currentPage = totalPages;
+  }
 
   if (!products.length) {
     inventoryEl.innerHTML = '';
     emptyStateEl.style.display = 'block';
+    paginationEl.innerHTML = '';
     return;
   }
 
   emptyStateEl.style.display = 'none';
-  inventoryEl.innerHTML = products.map(product => `
+
+  const startIndex = (currentPage - 1) * pageSize;
+  const visibleProducts = products.slice(startIndex, startIndex + pageSize);
+
+  inventoryEl.innerHTML = visibleProducts.map(product => `
     <article class="score-card">
       <div class="meta">
         <span>${escapeHtml(product.genre || 'Original')}</span>
@@ -222,6 +300,8 @@ function renderProducts() {
       </div>
     </article>
   `).join('');
+
+  renderPagination(totalPages);
 }
 
 function escapeHtml(value) {
@@ -253,8 +333,15 @@ async function loadProducts() {
   renderProducts();
 }
 
-searchInput.addEventListener('input', renderProducts);
-sortSelect.addEventListener('change', renderProducts);
+searchInput.addEventListener('input', () => {
+  currentPage = 1;
+  renderProducts();
+});
+
+sortSelect.addEventListener('change', () => {
+  currentPage = 1;
+  renderProducts();
+});
 
 window.scoreProducts = [];
 loadProducts();
