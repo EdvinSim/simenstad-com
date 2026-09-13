@@ -54,6 +54,11 @@
   border-radius: 0;
 }
 
+.sort-wrap select {
+  background: var(--ivory);
+  color: var(--ink);
+}
+
 .inventory {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -137,19 +142,42 @@
   color: var(--slate);
 }
 
+.purchase-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, auto));
+  gap: 8px;
+  justify-content: flex-end;
+  align-items: center;
+}
+
 .buy-btn {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 94px;
   padding: 11px 16px;
   border: 1px solid var(--brass);
   color: var(--brass);
   background: transparent;
   cursor: pointer;
+  text-align: center;
   transition: background 200ms ease, color 200ms ease;
 }
 
 .buy-btn:hover {
   background: var(--brass);
   color: var(--ink);
+}
+
+.buy-btn span:first-child {
+  font-size: 0.9em;
+  line-height: 1;
+}
+
+.buy-btn.is-empty {
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .empty-state {

@@ -100,7 +100,7 @@ function mapSheetRows(rows) {
       const genre = getCellValue(obj, ['sjanger', 'genre']) || 'Original';
       const time = getCellValue(obj, ['tid', 'time', 'duration']) || '—';
       const audioUrl = getCellValue(obj, ['lyd', 'audio', 'audioUrl', 'soundcloud', 'youtube']) || '';
-      const buyUrl = getCellValue(obj, ['kjop', 'kjøp', 'buy', 'buyurl', 'purchase']) || 'mailto:edvin@simenstad.com?subject=Kjøp%20noter';
+      const buyUrl = getCellValue(obj, ['kjop', 'kjøp', 'buy', 'buyurl', 'purchase']) || '';
 
       return {
         title,
@@ -146,6 +146,8 @@ function getFilteredProducts() {
   const mode = sortSelect.value;
   products.sort((a, b) => {
     if (mode === 'composer-asc') return (a.composer || '').localeCompare(b.composer || '', 'nb');
+    if (mode === 'ensemble-asc') return (a.ensemble || '').localeCompare(b.ensemble || '', 'nb');
+    if (mode === 'genre-asc') return (a.genre || '').localeCompare(b.genre || '', 'nb');
     if (mode === 'time-asc') return (a.durationSeconds || 0) - (b.durationSeconds || 0);
     if (mode === 'time-desc') return (b.durationSeconds || 0) - (a.durationSeconds || 0);
     return (a.title || '').localeCompare(b.title || '', 'nb');
@@ -175,14 +177,19 @@ function renderProducts() {
 
       <div class="pill-row">
         <span class="pill">${escapeHtml(product.ensemble || 'Ukjent besetning')}</span>
-        ${product.audioUrl ? '<span class="pill">Lyd</span>' : ''}
       </div>
 
       <div class="price-row">
         <div class="price"> </div>
-        <div style="display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end;">
-          ${product.audioUrl ? `<a class="buy-btn" href="${escapeAttribute(product.audioUrl)}" target="_blank" rel="noopener noreferrer">Lytt</a>` : ''}
-          <a class="buy-btn" href="${escapeAttribute(product.buyUrl || 'mailto:edvin@simenstad.com?subject=Kjøp%20noter')}" target="_blank" rel="noopener noreferrer">Kjøp</a>
+        <div class="purchase-actions">
+          <a class="buy-btn ${product.audioUrl ? '' : 'is-empty'}" href="${product.audioUrl ? escapeAttribute(product.audioUrl) : '#'}" target="${product.audioUrl ? '_blank' : ''}" rel="${product.audioUrl ? 'noopener noreferrer' : ''}" aria-disabled="${product.audioUrl ? 'false' : 'true'}" ${product.audioUrl ? '' : 'tabindex="-1"'}>
+            <span aria-hidden="true">▶</span>
+            <span>Lytt</span>
+          </a>
+          <a class="buy-btn ${product.buyUrl ? '' : 'is-empty'}" href="${product.buyUrl ? escapeAttribute(product.buyUrl) : '#'}" target="${product.buyUrl ? '_blank' : ''}" rel="${product.buyUrl ? 'noopener noreferrer' : ''}" aria-disabled="${product.buyUrl ? 'false' : 'true'}" ${product.buyUrl ? '' : 'tabindex="-1"'}>
+            <span aria-hidden="true">🛒</span>
+            <span>Kjøp</span>
+          </a>
         </div>
       </div>
     </article>
