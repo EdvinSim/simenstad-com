@@ -62,6 +62,7 @@
 .inventory {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
   gap: 22px;
   margin-top: 18px;
 }
@@ -79,6 +80,17 @@
 .score-card:hover {
   transform: translateY(-2px);
   border-color: var(--brass);
+}
+
+.score-card h3 {
+  min-height: 6.8rem;
+  max-height: 6.8rem;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  align-items: flex-start;
 }
 
 .score-card .meta {
@@ -102,6 +114,7 @@
 .composer {
   color: var(--slate);
   font-size: 0.98rem;
+  min-height: 2.2rem;
   margin-bottom: 16px;
 }
 
@@ -110,6 +123,7 @@
   flex-wrap: wrap;
   gap: 8px;
   margin-bottom: 14px;
+  min-height: 2.5rem;
 }
 
 .pill {
@@ -128,26 +142,27 @@
 
 .price-row {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  align-items: flex-end;
+  justify-content: center;
   gap: 12px;
   padding-top: 14px;
+  margin-top: auto;
   border-top: 1px solid var(--rule);
+  min-height: 64px;
+  width: 100%;
 }
 
 .price {
-  font-size: 0.8rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--slate);
+  display: none;
 }
 
 .purchase-actions {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, auto));
-  gap: 8px;
-  justify-content: flex-end;
+  display: flex;
+  justify-content: center;
   align-items: center;
+  gap: 12px;
+  width: 100%;
+  margin-top: 4px;
 }
 
 .buy-btn {
@@ -155,19 +170,25 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  min-width: 94px;
-  padding: 11px 16px;
+  min-width: 88px;
+  padding: 11px 14px;
   border: 1px solid var(--brass);
+  border-radius: 999px;
   color: var(--brass);
-  background: transparent;
+  background: rgba(192, 156, 92, 0.04);
   cursor: pointer;
   text-align: center;
-  transition: background 200ms ease, color 200ms ease;
+  text-decoration: none;
+  transition: background 200ms ease, color 200ms ease, transform 150ms ease, border-color 150ms ease;
+  font-weight: 600;
+  letter-spacing: 0.02em;
 }
 
 .buy-btn:hover {
   background: var(--brass);
   color: var(--ink);
+  transform: translateY(-1px);
+  border-color: var(--brass);
 }
 
 .buy-btn span:first-child {
